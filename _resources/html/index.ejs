@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<title>Hospital</title>
+		<meta charset="UTF-8">
+
+		<link type="text/css" rel="stylesheet" href="css/main.css"> 
+		<link type="text/css" rel="stylesheet" href="css/var.css"> 
+	</head>
+	<body>
+		<header>
+			<img id="image-header" src="images/cross.png">
+			<h3>Dossier patient</h3>
+		</header>
+		<section>
+			<div id="body-header">
+				<div id="img-infos">
+					<img src="images/interrogation.png">
+				</div>
+				<div id="infos">
+					Triage par le plus récent
+				</div>
+				<a class="a-button" href="#" id="button-new">
+					<div>
+						<p>NEW</p>
+					</div>
+				</a>
+			</div>
+			<div id="body-content">
+				<% patients.forEach((patient) => { %>
+					<div class="list-item">
+						<p class="item-title"><%= patient.title %></p>
+						<p class="item-date"><%= patient.dates_entry %></p>
+						<p class="item-patient"><%= patient.name %></p>
+					</div>
+				<% }) %>
+			</div>
+		</section>
+		<footer>
+			<p>Auteur : Loris Levêque</p>
+		</footer>
+	</body>
+</html>

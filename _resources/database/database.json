@@ -1,3 +1,1 @@
-{
-	"test": {"test":"test"}
-}
+{"patients":[{"id":0,"title":"Premier patient","name":"Ashley Sanchez","obervations":"Premier patient à arriver 'hourra'","dates_entry":"01.01.20","dates_exit":"01.01.20","actions":"Ouverture du coeur","requirements":"être calme aux soins intensifs","then":"Médicaments pour le coeur","pharmaceuticals":[["drugs","","","drugs",""]],"history":"13ème clone d'Hitler","antecedant":"A failli tuer 2millions de juifs","allergy":"Juifs"}]}

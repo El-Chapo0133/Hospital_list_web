@@ -2,45 +2,88 @@
  * Author 		: Loris Levêque
  * Date 		: 24.01.2020
  * Description 	: Class that mimics a db
- */
+ * *********************************/
+
+const struct_patient = {
+	"title":"Premier patient",
+	"name":"Ashley Sanchez",
+	"obervations": "",
+	"dates_entry": "",
+	"dates_exit": "",
+	"actions": "",
+	"requirements": "",
+	"then": "",
+	"pharmaceuticals": [["","","","",""]],
+	"history": "",
+	"antecedant": "",
+	"allergy": ""
+}
+
+var fs 		= require('fs');
 
 var Api = /** Class */ (function() {
 	//const FILE = "_resources/database/database.json";
-	const FILE = { name: "_resources/database/database.json", lastModified: 1579506339806, webkitRelativePath: "", size: 404, type: "text/plain" }
+	const FILE = "_resources/database/database.json";
+	var json = {};
 	function Api() {
-		this.getAll = function() {
-			var request = new XMLHttpRequest();
-
-			request.onReadyStateChange = () => {
-				if (request.readyState == 4) {
-					if (request.status == 200 || request.status == 0) {
-						// success
-						return request.responseText;
-					} else {
-						// failure
-						throw("Error on the file loaded");
-					}
+		this.init = async function(callback) {
+			fs.readFile(FILE, (err, data) => {
+				if (err)
+					throw(err);
+				else {
+					json = JSON.parse(data.toString());
+					callback();
+				}
+			});
+		}
+		this.getAllPatients = async function() {
+			return json.patients;
+		}
+		this.insertPatient = async function(input) {
+			if (!isNull(json)) {
+				if (isInputCorrect(input)) {
+					input.id = (getLastPatient().id + 1);
+					json.patients.push(input);
+					return;
 				}
 			}
-			request.open("GET", FILE, true);
-			request.send();
-
-			/*var input = document.getElementById("file");
-
-			input.addEventListener('change', (e) => {
-				var reader = new FileReader();
-				reader.addEventListener('load', (e) => {
-					console.log(e.target.result);
-				})
-
-				var file = e.target.files[0];
-				file.name = "_resources/database/database.json";
-
-				reader.readAsText(file);
-			});*/
 		}
+		this.removePatientFromId= async function(input) {
+			if (!isNull(json)) {
+				json.patients.forEach((patient) => {
+					if (patient.id == input) {
+						/* TODO
+						cp array, remove cell where id = id, cp array to json
+						 */
+					}
+				});
+			}
+		}
+		this.close = async function() {
+			fs.writeFile(FILE, JSON.stringify(json), (err) => {
+				if (err)
+					throw(err);
+				else {
+					json = null;
+					return;
+				}
+			});
+		}
+	}
+	function isNull(input) {
+		if (input == null)
+			return true;
+		else
+			return false;
+	}
+	function isInputCorrect(input) {
+		/* TODO */
+		return true;
+	}
+	function getLastPatient() {
+		return json.patients[json.patients.length - 1];
 	}
 	return Api;
 })();
 
-var api = new Api();
+module.exports = new Api();
